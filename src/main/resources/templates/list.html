@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head><title>Meetings</title></head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Scheduled Meetings</h2>
+        <a th:href="@{/meetings/book}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Book</a>
+    </div>
+
+    <div th:if="${success}" class="alert alert-success alert-dismissible fade show" th:text="${success}">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div th:if="${meetings.isEmpty()}" class="text-center text-muted py-5">
+        <i class="bi bi-calendar-x fs-1"></i>
+        <p class="mt-2">No scheduled meetings.</p>
+    </div>
+
+    <div class="row g-3" th:unless="${meetings.isEmpty()}">
+        <div class="col-md-6" th:each="meeting : ${meetings}">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${meeting.title}"></h5>
+                    <p class="text-muted mb-1">
+                        <i class="bi bi-clock"></i>
+                        <span th:text="${#temporals.format(meeting.startTime, 'MMM d, yyyy HH:mm')}"></span>
+                        &rarr;
+                        <span th:text="${#temporals.format(meeting.endTime, 'HH:mm')}"></span>
+                    </p>
+                    <p class="mb-2">
+                        <i class="bi bi-people"></i>
+                        <span th:text="${#strings.listJoin(meeting.participantNames, ', ')}"></span>
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <form th:action="@{/meetings/{id}/cancel(id=${meeting.id})}" method="post"
+                          onsubmit="return confirm('Cancel this meeting?')">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head><title>Book Meeting</title></head>
+<body>
+<div layout:fragment="content">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <h2 class="mb-4">Book a Meeting</h2>
+
+            <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+            <form th:action="@{/meetings/book}" th:object="${meetingRequest}" method="post">
+                <div class="mb-3">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-control" th:field="*{title}"
+                           th:classappend="${#fields.hasErrors('title')} ? 'is-invalid'"/>
+                    <div class="invalid-feedback" th:errors="*{title}"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Start Time</label>
+                    <input type="datetime-local" class="form-control" th:field="*{startTime}"
+                           th:classappend="${#fields.hasErrors('startTime')} ? 'is-invalid'"/>
+                    <div class="invalid-feedback" th:errors="*{startTime}"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">End Time</label>
+                    <input type="datetime-local" class="form-control" th:field="*{endTime}"
+                           th:classappend="${#fields.hasErrors('endTime')} ? 'is-invalid'"/>
+                    <div class="invalid-feedback" th:errors="*{endTime}"></div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Participants</label>
+                    <div th:if="${#fields.hasErrors('participantUsernames')}" class="text-danger small mb-1"
+                         th:errors="*{participantUsernames}"></div>
+                    <div class="row row-cols-2 row-cols-md-3 g-2">
+                        <div class="col" th:each="user : ${users}">
+                            <div class="form-check border rounded p-2">
+                                <input class="form-check-input" type="checkbox"
+                                       name="participantUsernames"
+                                       th:value="${user.username}"
+                                       th:id="${'user-' + user.id}"/>
+                                <label class="form-check-label" th:for="${'user-' + user.id}"
+                                       th:text="${user.displayName}"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Book Meeting</button>
+                <a th:href="@{/meetings}" class="btn btn-secondary ms-2">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

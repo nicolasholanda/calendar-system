@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head><title>Home</title></head>
+<body>
+<div layout:fragment="content">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="mb-3">Welcome to Calendar</h1>
+            <p class="text-muted mb-5">Book meetings, manage your schedule, and find the best time for two people.</p>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-calendar-plus fs-1 text-primary"></i>
+                            <h5 class="card-title mt-2">Book Meeting</h5>
+                            <p class="card-text text-muted">Schedule a new meeting with participants.</p>
+                            <a th:href="@{/meetings/book}" class="btn btn-primary">Book</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-list-ul fs-1 text-success"></i>
+                            <h5 class="card-title mt-2">View Meetings</h5>
+                            <p class="card-text text-muted">See all scheduled meetings.</p>
+                            <a th:href="@{/meetings}" class="btn btn-success">View</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-people fs-1 text-info"></i>
+                            <h5 class="card-title mt-2">Suggest Time</h5>
+                            <p class="card-text text-muted">Find the best slot for two people.</p>
+                            <a th:href="@{/meetings/suggest}" class="btn btn-info text-white">Suggest</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
